@@ -1,0 +1,116 @@
+export { book as theme } from 'mdx-deck/themes'
+
+# Arduino Workshop
+#### Host by the Association of Computing Machinery
+---
+### About Me
+ > No one cares, let's move on
+---
+#### Initial Arduino Setup
+```javascript
+
+void setup() {
+
+}
+
+void loop() {
+
+}
+```
+---
+### Setting up your first JoyStick
+#### List of materials
+- JoyStick
+- 5 male to female cables
+- 5 male to male cables
+---
+```javascript
+const int SW_pin = 2;
+const int X_pin = 0;
+const int Y_pin = 1;
+
+void setup() {
+    pinMode(SW_pin, INPUT);
+    digitalWrite(SW_pin, HIGH);
+
+    Serial.begin(9600);
+}
+```
+---
+```javascript
+void loop() {
+    Serial.print("Switch:  ");
+    Serial.print(digitalRead(SW_pin));
+    Serial.print("\n");
+    Serial.print("X-axis: ");
+    Serial.print(analogRead(X_pin));
+    Serial.print("\n");
+    Serial.print("Y-axis: ");
+    Serial.println(analogRead(Y_pin));
+    Serial.print("\n\n");
+}
+```
+---
+## Keep in mind that each new slide we are adding onto the previous code and not rewritting it
+---
+### Adding a Motor to be controlled by the JoyStick
+#### List of materials
+- Motor
+---
+```javascript
+const int motorPin = 3;
+void setup() {
+    pinMode(motorPin, OUTPUT);
+}
+
+void loop() {
+    if (digitalRead(SW_pin) == 0) {
+        digitalWrite(motorPin, HIGH);
+    } else {
+        digitalWrite(motorPin, LOW);
+    }
+}
+```
+---
+### RGB Light Configuration
+#### List of materials
+- RGB white light
+- 330 Resistors x3
+- 4 male to male cables
+---
+```javascript
+const int redPin = 10;
+const int greenPin = 9;
+const int bluePin = 8;
+
+void setup() {
+    pinMode(redPin, OUTPUT);
+    pinMode(greenPin, OUTPUT);
+    pinMode(bluePin, OUTPUT);
+}
+```
+---
+```javascript
+void setColor(int red, int green, int blue)
+{
+  #ifdef COMMON_ANODE
+    red = 255 - red;
+    green = 255 - green;
+    blue = 255 - blue;
+  #endif
+  analogWrite(redPin, red);
+  analogWrite(greenPin, green);
+  analogWrite(bluePin, blue);  
+}
+```
+---
+``` javascript
+void loop() {
+    setColor((analogRead(X_pin)/1024.0)*255, 0, (analogRead(Y_pin)/1024.0)*255);  // red
+    Serial.println((analogRead(X_pin)/1024.0)*255);
+    Serial.println((analogRead(Y_pin)/1024.0)*255);
+}
+```
+---
+### Thank You for Participating
+###### You can find us on Facebook or Catlife for more events and workshops
